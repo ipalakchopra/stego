@@ -15,7 +15,7 @@ public class MP {
 		BufferedImage code =  ImageIO.read(code_file);
 		
 		Encrypt(code,base);
-		//WriteImage(image, "op.png");
+		WriteImage(base, "op.png");
 	}
 
 	public static void Encrypt(BufferedImage code, BufferedImage base){
@@ -25,42 +25,38 @@ public class MP {
 
         System.out.println(w_b + " " + h_b);
 
-		rgb = base.getRGB(1, 1); 
-		Color color = new Color(rgb, true);
-
-		int c_arr[] = {color.getRed(),color.getGreen(),color.getBlue()};
-		String c_arr_bin[]={"0","0","0"};
-
-		for(int l = 0; l<3; l++){
-			System.out.println("int");
-			System.out.println(c_arr[l]);
-
-			c_arr_bin[l] = Integer.toBinaryString(c_arr[l]);
-			
-			while(c_arr_bin[l].length()<8){
-				c_arr_bin[l] = "0" + c_arr_bin[l];
-			}
-
-			System.out.println("bin");
-			System.out.println(c_arr_bin[l]);
 		
-		}
-		
-		/*for(int i = 0; i<w_b; i++){
-			for(int j = 0; j<w_h; j++){
+		for(int row = 0; row<h_b; row++){
+			for(int col = 0; col<w_b; col++){
 				
-				rgb = img.getRGB(j, i); 
+				rgb = base.getRGB(col, row); 
 				Color color = new Color(rgb, true);
 
-				int red = color.getRed();
-                int green = color.getGreen();
-                int blue = color.getBlue();
+				int c_arr[] = {color.getRed(),color.getGreen(),color.getBlue()};
+				String c_arr_bin[]={"0","0","0"};
 
-				/*System.out.println(red);
-				System.out.println(green);
-				System.out.println(blue);
+				for(int l = 0; l<3; l++){
+					//System.out.println("\nint");
+					//System.out.println(c_arr[l]);
+
+					c_arr_bin[l] = Integer.toBinaryString(c_arr[l]);
+					
+					while(c_arr_bin[l].length()<8){
+						c_arr_bin[l] = "0" + c_arr_bin[l];
+					}
+
+					//System.out.println("bin");
+					//System.out.println(c_arr_bin[l]);
+				
+				}
+				//System.out.println(Integer.parseInt(c_arr_bin[0], 2));
+				//System.out.println(Integer.parseInt(c_arr_bin[1], 2));
+				//System.out.println(Integer.parseInt(c_arr_bin[2], 2));
+					
+				int nrgb  = 65536 * Integer.parseInt(c_arr_bin[0], 2) + 256 * Integer.parseInt(c_arr_bin[1], 2) + Integer.parseInt(c_arr_bin[2], 2) ;
+                base.setRGB(col, row, nrgb);	
 			}
-		}*/
+		}
 	}
 
 	public static void WriteImage(BufferedImage img, String path){

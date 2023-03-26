@@ -1,30 +1,76 @@
-import java.io.*;
-import java.awt.Color;
-import java.awt.image.*;
-
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import javax.imageio.ImageIO;
+import java.io.File;
+import java.awt.Color;
+import java.lang.Integer;
 
 public class Sample {
+    public static void main(String[] args) throws IOException{
+		
+		File base_file = new File("base.png");
+		BufferedImage base =  ImageIO.read(base_file);
 
-    public static void main(String args[]) throws IOException{
-        File file = new File("code.png");
-        BufferedImage k = ImageIO.read(file);
-        System.out.println("Image Read Completed");
+		File code_file = new File("code.png");
+		BufferedImage code =  ImageIO.read(code_file);
+		
+		Encrypt(code,base);
+		//WriteImage(image, "op.png");
+	}
 
-        for(int i=0; i<k.getHeight(); i++) {
-            for(int j=0; j<k.getWidth(); j++) {
+	public static void Encrypt(BufferedImage code, BufferedImage base){
+		int w_b = base.getWidth();
+        int h_b = base.getHeight();
+        int rgb;
 
-                int color = k.getRGB(j, i);
-                int Blue = color & 0x80;
-                int Green = (color & 0x80) >> 8;
-                int Red = (color & 0x80) >> 16;
-                Color c = new Color(Red+Green+Blue,Red+Green+Blue,Red+Green+Blue);
-                k.setRGB(j, i, c.getRGB());
-            }
+        System.out.println(w_b + " " + h_b);
+
+		rgb = base.getRGB(1, 1); 
+		Color color = new Color(rgb, true);
+
+		int c_arr[] = {color.getRed(),color.getGreen(),color.getBlue()};
+		String c_arr_bin[]={"0","0","0"};
+
+		for(int l = 0; l<3; l++){
+			System.out.println("int");
+			System.out.println(c_arr[l]);
+
+			c_arr_bin[l] = Integer.toBinaryString(c_arr[l]);
+			
+			while(c_arr_bin[l].length()<8){
+				c_arr_bin[l] = "0" + c_arr_bin[l];
+			}
+
+			System.out.println("bin");
+			System.out.println(c_arr_bin[l]);
+		
+		}
+		
+		/*for(int i = 0; i<w_b; i++){
+			for(int j = 0; j<w_h; j++){
+				
+				rgb = img.getRGB(j, i); 
+				Color color = new Color(rgb, true);
+
+				int red = color.getRed();
+                int green = color.getGreen();
+                int blue = color.getBlue();
+
+				/*System.out.println(red);
+				System.out.println(green);
+				System.out.println(blue);
+			}
+		}*/
+	}
+
+	public static void WriteImage(BufferedImage img, String path){
+        File ImageFile = new File(path);
+
+        try{
+            ImageIO.write(img,"png", ImageFile);
         }
-        file = new File("op11.jpg");
-        ImageIO.write(k, "jpg", file);
-        System.out.println("Image Write Completed");
+        catch(IOException e){
+            e.printStackTrace();
+        }
     }
 }
-
