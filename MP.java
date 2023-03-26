@@ -23,9 +23,11 @@ public class MP {
         int h_b = base.getHeight();
         int rgb;
 
+		int w_c = code.getWidth();
+        int h_c = code.getHeight();
+
         System.out.println(w_b + " " + h_b);
 
-		
 		for(int row = 0; row<h_b; row++){
 			for(int col = 0; col<w_b; col++){
 				
@@ -44,19 +46,21 @@ public class MP {
 					while(c_arr_bin[l].length()<8){
 						c_arr_bin[l] = "0" + c_arr_bin[l];
 					}
-
-					//System.out.println("bin");
-					//System.out.println(c_arr_bin[l]);
+					//4 bits of base image 4 bits of code image
+					c_arr_bin[l] = c_arr_bin[l].substring(0,4);
 				
 				}
-				//System.out.println(Integer.parseInt(c_arr_bin[0], 2));
-				//System.out.println(Integer.parseInt(c_arr_bin[1], 2));
-				//System.out.println(Integer.parseInt(c_arr_bin[2], 2));
-					
+				
 				int nrgb  = 65536 * Integer.parseInt(c_arr_bin[0], 2) + 256 * Integer.parseInt(c_arr_bin[1], 2) + Integer.parseInt(c_arr_bin[2], 2) ;
-                base.setRGB(col, row, nrgb);	
-			}
+                base.setRGB(col, row, nrgb);		
+			}	
 		}
+
+		System.out.println(w_c + " " + h_c);
+		System.out.println(code.getRGB(1, 1));
+
+
+
 	}
 
 	public static void WriteImage(BufferedImage img, String path){
