@@ -8,7 +8,7 @@ import java.lang.Integer;
 public class MP2 {
     public static void main(String[] args) throws IOException{
 		
-		File base_file = new File("cat.png");
+		File base_file = new File("base.png");
 		BufferedImage base =  ImageIO.read(base_file);
 
 		File code_file = new File("code.png");
@@ -21,13 +21,13 @@ public class MP2 {
         int h_c = code.getHeight();
 		
 		Encrypt(code, base, w_b, h_b, w_c, h_c);
-		WriteImage(base, "op.png");
+		WriteImage(base, "encoded.png");
 
-        File base_file2 = new File("op.png");
+        File base_file2 = new File("encoded.png");
 		BufferedImage base2 =  ImageIO.read(base_file2);
 
         Decode(base2, w_c, h_c);
-        WriteImage(base2, "op2.png");
+        //WriteImage(base2, "op2.png");
         
 	}
 
@@ -115,7 +115,7 @@ public class MP2 {
 
             }
         }
-        WriteImage(dcd, "op3.png");
+        WriteImage(dcd, "decoded.png");
     }
 
 	public static void WriteImage(BufferedImage img, String path){
