@@ -8,7 +8,7 @@ import java.lang.Integer;
 public class MP2 {
     public static void main(String[] args) throws IOException{
 		
-		File base_file = new File("base.png");
+		File base_file = new File("base.png");//reads the base image 
 		BufferedImage base =  ImageIO.read(base_file);
 
 		File code_file = new File("code.png");
