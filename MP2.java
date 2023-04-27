@@ -53,8 +53,6 @@ public class MP2 {
 				String c_arr_bin_code[]={"0","0","0"};
 
 				for(int l = 0; l<3; l++){
-					//System.out.println("\nint");
-					//System.out.println(c_arr[l]);
 
 					c_arr_bin_base[l] = Integer.toBinaryString(c_arr_base[l]);
 					
@@ -78,8 +76,6 @@ public class MP2 {
 			}	
 		}
 
-		//System.out.println(w_c + " " + h_c);
-		//System.out.println(code.getRGB(1, 1));
 
 	}
 
@@ -98,8 +94,6 @@ public class MP2 {
 				String c_arr_bin_base[]={"0","0","0"};
 
                 for(int l = 0; l<3; l++){
-					//System.out.println("\nint");
-					//System.out.println(c_arr[l]);
 
 					c_arr_bin_base[l] = Integer.toBinaryString(c_arr_base[l]);
 					
