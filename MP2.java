@@ -20,7 +20,7 @@ public class MP2 {
 		int w_c = code.getWidth();
         int h_c = code.getHeight();
 		
-		Encrypt(code, base, w_b, h_b, w_c, h_c);
+		Encode(code, base, w_b, h_b, w_c, h_c);
 		WriteImage(base, "encoded.png");
 
         File base_file2 = new File("encoded.png");
@@ -31,7 +31,7 @@ public class MP2 {
         
 	}
 
-	public static void Encrypt(BufferedImage code, BufferedImage base, int w_b, int h_b, int w_c, int h_c){
+	public static void Encode(BufferedImage code, BufferedImage base, int w_b, int h_b, int w_c, int h_c){
 
         int rgb_base, rgb_code;
 
