@@ -20,7 +20,7 @@ public class MP2 {
 		int w_c = code.getWidth();
         int h_c = code.getHeight();
 		
-		Encrypt(code, base, w_b, h_b, w_c, h_c);
+		Encode(code, base, w_b, h_b, w_c, h_c);
 		WriteImage(base, "encoded.png");
 
         File base_file2 = new File("encoded.png");
@@ -31,7 +31,7 @@ public class MP2 {
         
 	}
 
-	public static void Encrypt(BufferedImage code, BufferedImage base, int w_b, int h_b, int w_c, int h_c){
+	public static void Encode(BufferedImage code, BufferedImage base, int w_b, int h_b, int w_c, int h_c){
 
         int rgb_base, rgb_code;
 
@@ -53,8 +53,6 @@ public class MP2 {
 				String c_arr_bin_code[]={"0","0","0"};
 
 				for(int l = 0; l<3; l++){
-					//System.out.println("\nint");
-					//System.out.println(c_arr[l]);
 
 					c_arr_bin_base[l] = Integer.toBinaryString(c_arr_base[l]);
 					
@@ -78,8 +76,6 @@ public class MP2 {
 			}	
 		}
 
-		//System.out.println(w_c + " " + h_c);
-		//System.out.println(code.getRGB(1, 1));
 
 	}
 
@@ -98,8 +94,6 @@ public class MP2 {
 				String c_arr_bin_base[]={"0","0","0"};
 
                 for(int l = 0; l<3; l++){
-					//System.out.println("\nint");
-					//System.out.println(c_arr[l]);
 
 					c_arr_bin_base[l] = Integer.toBinaryString(c_arr_base[l]);
 					

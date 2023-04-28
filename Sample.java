@@ -4,73 +4,92 @@ import javax.imageio.ImageIO;
 import java.io.File;
 import java.awt.Color;
 import java.lang.Integer;
+import java.util.Arrays;
+import java.util.stream.*;
+import java.util.*;
+import java.lang.Math;
 
 public class Sample {
     public static void main(String[] args) throws IOException{
-		
-		File base_file = new File("base.png");
-		BufferedImage base =  ImageIO.read(base_file);
+	
+		//obtaining base ind
+		int base_val[] = {24,12,65,42,39};
 
-		File code_file = new File("code.png");
-		BufferedImage code =  ImageIO.read(code_file);
-		
-		Encrypt(code,base);
-		//WriteImage(image, "op.png");
-	}
+		int[][] base = new int[base_val.length][2];
 
-	public static void Encrypt(BufferedImage code, BufferedImage base){
-		int w_b = base.getWidth();
-        int h_b = base.getHeight();
-        int rgb;
-
-        System.out.println(w_b + " " + h_b);
-
-		rgb = base.getRGB(1, 1); 
-		Color color = new Color(rgb, true);
-
-		int c_arr[] = {color.getRed(),color.getGreen(),color.getBlue()};
-		String c_arr_bin[]={"0","0","0"};
-
-		for(int l = 0; l<3; l++){
-			System.out.println("int");
-			System.out.println(c_arr[l]);
-
-			c_arr_bin[l] = Integer.toBinaryString(c_arr[l]);
-			
-			while(c_arr_bin[l].length()<8){
-				c_arr_bin[l] = "0" + c_arr_bin[l];
-			}
-
-			System.out.println("bin");
-			System.out.println(c_arr_bin[l]);
-		
+		for(int i = 0; i < base.length; i++) {
+			base[i] = new int[] {base_val[i], i};
 		}
 		
-		/*for(int i = 0; i<w_b; i++){
-			for(int j = 0; j<w_h; j++){
-				
-				rgb = img.getRGB(j, i); 
-				Color color = new Color(rgb, true);
+		Arrays.sort(base, (a, b) -> Integer.compare(a[0], b[0]));
 
-				int red = color.getRed();
-                int green = color.getGreen();
-                int blue = color.getBlue();
+		for(int i = 0; i<base.length; i++){
+			System.out.println(base[i][0] + " " + base[i][1]);
+		}
 
-				/*System.out.println(red);
-				System.out.println(green);
-				System.out.println(blue);
+		//obtaining code ind
+		int code_val[] = {46,95,25,4};
+
+		int[][] code = new int[code_val.length][2];
+
+		for(int i = 0; i < code.length; i++) {
+			code[i] = new int[] {code_val[i], i};
+		}
+		
+		System.out.println("");
+		
+		for(int i = 0; i<code.length; i++){
+			System.out.println(code[i][0] + " " + code[i][1]);
+		}
+
+		//finding closest value
+		List base_copy = Arrays.asList(base);	
+		int code_index[] = new int[code.length];
+
+		int assigned_size = 0;
+
+		System.out.println();
+
+		while(assigned_size<code.length){
+			
+			int ind = 0;
+
+			for(int i = 0; i<base.length;i++){
+			
+				System.out.println(assigned_size+" "+i);
+				System.out.println(code[assigned_size][0]+" "+base[i][0]);
+				System.out.println();
+
+				if(code[assigned_size][0]>base[i][0]){
+					ind++;
+				}
+				else{
+					
+					break;
+				}
+			
+				if(ind == base.length){
+					code_index[assigned_size] = ind-1;
+				}
+				else if(Math.abs(code[assigned_size][0]-base[ind][0])<Math.abs(code[assigned_size][0]-base[ind-1][0])){
+					code_index[assigned_size] = ind;
+				}
+				else{
+					code_index[assigned_size] = ind - 1;
+				}
+				System.out.println(code_index[assigned_size]);
+
 			}
-		}*/
+			
+			assigned_size++;
+		}
+		
+
+		System.out.println("");
+
+		for(int i = 0; i<code_index.length;i++){
+			System.out.println(code_index[i]);
+		}
+
 	}
-
-	public static void WriteImage(BufferedImage img, String path){
-        File ImageFile = new File(path);
-
-        try{
-            ImageIO.write(img,"png", ImageFile);
-        }
-        catch(IOException e){
-            e.printStackTrace();
-        }
-    }
 }
