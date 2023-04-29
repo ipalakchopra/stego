@@ -5,7 +5,7 @@ import java.io.File;
 import java.awt.Color;
 import java.lang.Integer;
 import java.util.Arrays;
-import java.util.stream.*;
+import java.util.stream.IntStream;
 import java.util.*;
 import java.lang.Math;
 
@@ -13,7 +13,7 @@ public class Sample {
     public static void main(String[] args) throws IOException{
 	
 		//obtaining base ind
-		int base_val[] = {24,12,65,42,39};
+		int base_val[] = {0,68,55,95,34};
 
 		int[][] base = new int[base_val.length][2];
 
@@ -28,7 +28,7 @@ public class Sample {
 		}
 
 		//obtaining code ind
-		int code_val[] = {46,95,25,4};
+		int code_val[] = {4,56,39,4};
 
 		int[][] code = new int[code_val.length][2];
 
@@ -36,60 +36,69 @@ public class Sample {
 			code[i] = new int[] {code_val[i], i};
 		}
 		
-		System.out.println("");
 		
-		for(int i = 0; i<code.length; i++){
-			System.out.println(code[i][0] + " " + code[i][1]);
-		}
-
 		//finding closest value
-		List base_copy = Arrays.asList(base);	
+		int[][] base_copy=base,base_copy2 = base;	
 		int code_index[] = new int[code.length];
 
 		int assigned_size = 0;
-
-		System.out.println();
 
 		while(assigned_size<code.length){
 			
 			int ind = 0;
 
-			for(int i = 0; i<base.length;i++){
-			
-				System.out.println(assigned_size+" "+i);
-				System.out.println(code[assigned_size][0]+" "+base[i][0]);
-				System.out.println();
-
-				if(code[assigned_size][0]>base[i][0]){
+			for(int i = 0; i<base_copy.length;i++){
+				if(code[assigned_size][0]>base_copy[i][0]){
 					ind++;
 				}
 				else{
-					
 					break;
 				}
+			}
 			
-				if(ind == base.length){
-					code_index[assigned_size] = ind-1;
-				}
-				else if(Math.abs(code[assigned_size][0]-base[ind][0])<Math.abs(code[assigned_size][0]-base[ind-1][0])){
-					code_index[assigned_size] = ind;
-				}
-				else{
-					code_index[assigned_size] = ind - 1;
-				}
-				System.out.println(code_index[assigned_size]);
+			if(ind == base_copy.length){
+				code_index[assigned_size] = base_copy[ind-1][1];
+				ind = ind - 1;
+			}
+			else if(ind == 0){
+				code_index[assigned_size] = base_copy[ind][1];
 
 			}
+			else if(Math.abs(code[assigned_size][0]-base_copy[ind][0])<Math.abs(code[assigned_size][0]-base_copy[ind-1][0])){
+				code_index[assigned_size] = base_copy[ind][1];
+
+			}
+			else{
+				code_index[assigned_size] = base_copy[ind-1][1];
+				ind = ind - 1;
+
+			}
+			for(int i=0, k=0;i<base_copy.length;i++){
+				if(i!=ind){
+					base_copy2[k]=base_copy[i];
+					k++;
+				}
+			}base_copy=base_copy2;
 			
 			assigned_size++;
 		}
 		
+		System.out.println("");
+
+		Arrays.sort(base, (a, b) -> Integer.compare(a[1], b[1]));
+
+		for(int i = 0; i<base.length; i++){
+			System.out.println(base[i][0] + " " + base[i][1]);
+		}
 
 		System.out.println("");
+
+		for(int i = 0; i<code.length; i++){
+			System.out.println(code[i][0] + " " + code[i][1]);
+		}
 
 		for(int i = 0; i<code_index.length;i++){
 			System.out.println(code_index[i]);
 		}
-
 	}
 }
