@@ -1,4 +1,4 @@
-
+import java.io.IOException;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java. sql.*;
@@ -8,6 +8,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JFileChooser;
 import javax.swing.ImageIcon;
+import java.awt.Color;
+import java.lang.Integer;
 
 
 /*
@@ -230,6 +232,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        //base code
         JFileChooser chooser=new JFileChooser();
         chooser.showOpenDialog(null);
         File f=chooser.getSelectedFile();
@@ -255,6 +258,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        //code code
         JFileChooser chooser=new JFileChooser();
         chooser.showOpenDialog(null);
         File f=chooser.getSelectedFile();
@@ -311,6 +315,54 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
     }
+    
+    public static void Encode(BufferedImage code, BufferedImage base, int w_b, int h_b, int w_c, int h_c){
+
+        int rgb_base, rgb_code;
+
+        System.out.println(w_b + " " + h_b);
+
+		for(int row = 0; row<h_c; row++){
+			for(int col = 0; col<w_c; col++){
+				
+				rgb_base = base.getRGB(col, row); 
+				Color color_base = new Color(rgb_base, true);
+
+				int c_arr_base[] = {color_base.getRed(),color_base.getGreen(),color_base.getBlue()};
+				String c_arr_bin_base[]={"0","0","0"};
+
+                                rgb_code = code.getRGB(col, row); 
+				Color color_code = new Color(rgb_code, true);
+
+				int c_arr_code[] = {color_code.getRed(),color_code.getGreen(),color_code.getBlue()};
+				String c_arr_bin_code[]={"0","0","0"};
+
+				for(int l = 0; l<3; l++){
+
+					c_arr_bin_base[l] = Integer.toBinaryString(c_arr_base[l]);
+					
+					while(c_arr_bin_base[l].length()<8){
+						c_arr_bin_base[l] = "0" + c_arr_bin_base[l];
+					}
+
+                                        c_arr_bin_code[l] = Integer.toBinaryString(c_arr_code[l]);
+					
+					while(c_arr_bin_code[l].length()<8){
+						c_arr_bin_code[l] = "0" + c_arr_bin_code[l];
+					}
+
+					//4 bits of base image 4 bits of code image
+					c_arr_bin_base[l] = c_arr_bin_base[l].substring(0,4) + c_arr_bin_code[l].substring(0,4) ;
+				
+				}
+				
+				int nrgb  = 65536 * Integer.parseInt(c_arr_bin_base[0], 2) + 256 * Integer.parseInt(c_arr_bin_base[1], 2) + Integer.parseInt(c_arr_bin_base[2], 2) ;
+                                base.setRGB(col, row, nrgb);		
+			}	
+		}
+
+
+	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
