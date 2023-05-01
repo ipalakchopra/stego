@@ -9,7 +9,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JFileChooser;
 import javax.swing.ImageIcon;
 import java.awt.Color;
+import java.io.*;
 import java.lang.Integer;
+import java.io.FileWriter;
 
 
 /*
@@ -29,6 +31,9 @@ public class NewJFrame extends javax.swing.JFrame {
     public NewJFrame() {
         initComponents();
     }
+    
+    BufferedImage img_b = null;
+    BufferedImage img_c = null;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -55,11 +60,7 @@ public class NewJFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 102, 102));
         setForeground(java.awt.Color.darkGray);
-        addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentHidden(java.awt.event.ComponentEvent evt) {
-                formComponentHidden(evt);
-            }
-        });
+        
 
         jPanel2.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -68,11 +69,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jTextField2.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jTextField2.setText("ENCODING");
         jTextField2.setBorder(null);
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
+        
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton1.setText("Upload");
@@ -111,12 +108,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jTextField3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jTextField3.setText("Upload the code image");
         jTextField3.setScrollOffset(58);
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
-            }
-        });
-
+        
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton2.setText("Upload");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -222,24 +214,20 @@ public class NewJFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentHidden
-        // TODO add your handling code here:
-    }//GEN-LAST:event_formComponentHidden
+    
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+   
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    public void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         //base code
         JFileChooser chooser=new JFileChooser();
         chooser.showOpenDialog(null);
         File f=chooser.getSelectedFile();
         try{
-            BufferedImage img = null;
-            img = ImageIO.read(new File(f.getAbsolutePath()));
-            Image img1 = img.getScaledInstance(jLabel2.getWidth(), jLabel2.getHeight(), Image.SCALE_SMOOTH);
+            //BufferedImage img = null;
+            img_b = ImageIO.read(new File(f.getAbsolutePath()));
+            Image img1 = img_b.getScaledInstance(jLabel2.getWidth(), jLabel2.getHeight(), Image.SCALE_SMOOTH);
             ImageIcon format = new ImageIcon(img1);
             jLabel2.setIcon(format);
         }catch(Exception e){
@@ -252,20 +240,17 @@ public class NewJFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+   
+    public void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         //code code
         JFileChooser chooser=new JFileChooser();
         chooser.showOpenDialog(null);
         File f=chooser.getSelectedFile();
         try{
-            BufferedImage img = null;
-            img = ImageIO.read(new File(f.getAbsolutePath()));
-            Image img1 = img.getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH);
+            //BufferedImage img = null;
+            img_c = ImageIO.read(new File(f.getAbsolutePath()));
+            Image img1 = img_c.getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH);
             ImageIcon format = new ImageIcon(img1);
             jLabel1.setIcon(format);
         }catch(Exception e){
@@ -278,7 +263,23 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        System.out.println("done");
+        //submit button
+        //BufferedImage
+
+        FileWriter key_file = null;
+
+        try {
+            key_file = new FileWriter("key_file.txt");
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+        
+		BufferedWriter key = new BufferedWriter(key_file);
+
+        Encode(img_c, img_b, key);
+        WriteImage(img_b, "encoded.png");
+        
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
@@ -316,26 +317,42 @@ public class NewJFrame extends javax.swing.JFrame {
         });
     }
     
-    public static void Encode(BufferedImage code, BufferedImage base, int w_b, int h_b, int w_c, int h_c){
+    public static void Encode(BufferedImage code, BufferedImage base, BufferedWriter key){
+		int w_b = base.getWidth();
+        int h_b = base.getHeight();
+        
+		int w_c = code.getWidth();
+        int h_c = code.getHeight();
 
         int rgb_base, rgb_code;
 
         System.out.println(w_b + " " + h_b);
+		
+		System.out.println(w_c + " " + h_c);
+
+		try{
+			key.write(w_c + "," + h_c);
+			key.write("\n");
+		}
+		catch(Exception e){
+			e.getStackTrace();
+		}
 
 		for(int row = 0; row<h_c; row++){
-			for(int col = 0; col<w_c; col++){
-				
+			
+			//System.out.println("\nRow "+row);
+
+			String row_base[] = new String[w_b];
+			String row_code[] = new String[w_c];
+
+			//creating base binary array
+
+			for(int col = 0; col<w_b; col++){
 				rgb_base = base.getRGB(col, row); 
 				Color color_base = new Color(rgb_base, true);
 
 				int c_arr_base[] = {color_base.getRed(),color_base.getGreen(),color_base.getBlue()};
 				String c_arr_bin_base[]={"0","0","0"};
-
-                                rgb_code = code.getRGB(col, row); 
-				Color color_code = new Color(rgb_code, true);
-
-				int c_arr_code[] = {color_code.getRed(),color_code.getGreen(),color_code.getBlue()};
-				String c_arr_bin_code[]={"0","0","0"};
 
 				for(int l = 0; l<3; l++){
 
@@ -344,25 +361,143 @@ public class NewJFrame extends javax.swing.JFrame {
 					while(c_arr_bin_base[l].length()<8){
 						c_arr_bin_base[l] = "0" + c_arr_bin_base[l];
 					}
+			
+				}
+				row_base[col] = c_arr_bin_base[0] + c_arr_bin_base[1] + c_arr_bin_base[2];
+			}
 
-                                        c_arr_bin_code[l] = Integer.toBinaryString(c_arr_code[l]);
+			//creating code binary array
+
+			for(int col = 0; col<w_c; col++){
+
+                rgb_code = code.getRGB(col, row); 
+				Color color_code = new Color(rgb_code, true);
+
+				int c_arr_code[] = {color_code.getRed(),color_code.getGreen(),color_code.getBlue()};
+				String c_arr_bin_code[]={"0","0","0"};
+
+				for(int l = 0; l<3; l++){
+
+                    c_arr_bin_code[l] = Integer.toBinaryString(c_arr_code[l]);
 					
 					while(c_arr_bin_code[l].length()<8){
 						c_arr_bin_code[l] = "0" + c_arr_bin_code[l];
-					}
+					}				
+				}
+				row_code[col] = c_arr_bin_code[0] + c_arr_bin_code[1] + c_arr_bin_code[2];
+			}	
+			
+			//creating 2d base array
 
-					//4 bits of base image 4 bits of code image
-					c_arr_bin_base[l] = c_arr_bin_base[l].substring(0,4) + c_arr_bin_code[l].substring(0,4) ;
-				
+			int[][] base_arr = new int[row_base.length][2];
+			int temp;
+
+			for(int i = 0; i < base_arr.length; i++) {
+				temp = Integer.parseInt(row_base[i],2);
+				base_arr[i] = new int[] { temp, i};
+			}
+
+			Arrays.sort(base_arr, (a, b) -> Integer.compare(a[0], b[0]));
+
+			//creating 2d code array
+
+			int[][] code_arr = new int[row_code.length][2];
+
+			for(int i = 0; i < code_arr.length; i++) {
+				temp = Integer.parseInt(row_code[i],2);
+				code_arr[i] = new int[] { temp, i};
+			}
+
+			//applying closest pixel algorithm
+
+			int[][] base_copy=base_arr, base_copy2 = base_arr;	
+			int row_ind[] = new int[w_c];
+
+			int assigned_size = 0;
+
+			while(assigned_size<w_c){
+			
+				int ind = 0;
+	
+				for(int i = 0; i<base_copy.length;i++){
+					if(code_arr[assigned_size][0]>base_copy[i][0]){
+						ind++;
+					}
+					else{
+						break;
+					}
 				}
 				
-				int nrgb  = 65536 * Integer.parseInt(c_arr_bin_base[0], 2) + 256 * Integer.parseInt(c_arr_bin_base[1], 2) + Integer.parseInt(c_arr_bin_base[2], 2) ;
-                                base.setRGB(col, row, nrgb);		
-			}	
+				if(ind == base_copy.length){
+					row_ind[assigned_size] = base_copy[ind-1][1];
+					ind = ind - 1;
+				}
+
+				else if(ind == 0){
+					row_ind[assigned_size] = base_copy[ind][1];
+				}
+				
+				else if(Math.abs(code_arr[assigned_size][0]-base_copy[ind][0])<Math.abs(code_arr[assigned_size][0]-base_copy[ind-1][0])){
+					row_ind[assigned_size] = base_copy[ind][1];
+				}
+
+				else{
+					row_ind[assigned_size] = base_copy[ind-1][1];
+					ind = ind - 1;
+				}
+
+				for(int i=0, k=0;i<base_copy.length;i++){
+					if(i!=ind){
+						base_copy2[k]=base_copy[i];
+						k++;
+					}
+				}base_copy=base_copy2;
+
+				String tempstr = Integer.toString(row_ind[assigned_size]);
+				
+				try{
+					key.write(tempstr+",");
+				}
+				catch(Exception e){
+					e.getStackTrace();
+				}			
+				assigned_size++;
+			}
+			try{
+				key.write("\n");
+			}
+			catch(Exception e){
+				e.getStackTrace();
+			}
+
+			Arrays.sort(base_arr, (a, b) -> Integer.compare(a[1], b[1]));
+
+			//encoding
+
+			String[] temp_col = new String[3]; // r g b			
+
+			for(int i = 0; i<w_c; i++){
+				temp_col[0] = row_base[row_ind[i]].substring(0, 4)+row_code[i].substring(0, 4);
+				temp_col[1] = row_base[row_ind[i]].substring(8, 12)+row_code[i].substring(8, 12);
+				temp_col[2] = row_base[row_ind[i]].substring(16, 20)+row_code[i].substring(16, 20);		
+				
+				int nrgb  = 65536 * Integer.parseInt(temp_col[0], 2) + 256 * Integer.parseInt(temp_col[1], 2) + Integer.parseInt(temp_col[2], 2) ;
+                base.setRGB(row_ind[i], row, nrgb);		
+			}
+			
 		}
-
-
 	}
+
+    public static void WriteImage(BufferedImage img, String path){
+        File ImageFile = new File(path);
+
+        try{
+            ImageIO.write(img,"png", ImageFile);
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
