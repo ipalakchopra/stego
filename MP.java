@@ -5,6 +5,8 @@ import java.io.File;
 import java.awt.Color;
 import java.lang.Integer.*;
 import java.util.Arrays;
+import java.io.*;
+
 
 public class MP {
     public static void main(String[] args) throws IOException{
@@ -15,30 +17,45 @@ public class MP {
 		File code_file = new File("code.png");
 		BufferedImage code =  ImageIO.read(code_file);
 
-        int w_b = base.getWidth();
-        int h_b = base.getHeight();
+		//add in newjavaframe
+		FileWriter key_file = new FileWriter("key_file.txt");
+		BufferedWriter key = new BufferedWriter(key_file);
         
-		int w_c = code.getWidth();
-        int h_c = code.getHeight();
 		
-		Encode(code, base, w_b, h_b, w_c, h_c);
+		Encode(code, base, key);
 		WriteImage(base, "encoded.png");
 
         File base_file2 = new File("encoded.png");
 		BufferedImage base2 =  ImageIO.read(base_file2);
 
-        //Decode(base2, w_c, h_c);
+		BufferedReader key_dec2 = new BufferedReader(new FileReader("key_file.txt"));
+
+        Decode(base2, key_dec2);
         //WriteImage(base2, "op2.png");
         
 	}
 
-	public static void Encode(BufferedImage code, BufferedImage base, int w_b, int h_b, int w_c, int h_c){
+	public static void Encode(BufferedImage code, BufferedImage base, BufferedWriter key){
+		int ct = 0;
+		int w_b = base.getWidth();
+        int h_b = base.getHeight();
+        
+		int w_c = code.getWidth();
+        int h_c = code.getHeight();
 
         int rgb_base, rgb_code;
 
         System.out.println(w_b + " " + h_b);
 		
 		System.out.println(w_c + " " + h_c);
+
+		try{
+			key.write(w_c + "," + h_c);
+			key.write("\n");
+		}
+		catch(Exception e){
+			e.getStackTrace();
+		}
 
 		for(int row = 0; row<h_c; row++){
 			
@@ -155,30 +172,32 @@ public class MP {
 						k++;
 					}
 				}base_copy=base_copy2;
+
+				String tempstr = Integer.toString(row_ind[assigned_size]);
+				
+				try{
+					key.write(tempstr+",");
+				}
+				catch(Exception e){
+					e.getStackTrace();
+				}
+				
 				
 				assigned_size++;
+			}
+			try{
+				key.write("\n");
+				ct++;
+			}
+			catch(Exception e){
+				e.getStackTrace();
 			}
 
 			Arrays.sort(base_arr, (a, b) -> Integer.compare(a[1], b[1]));
 
-			if(row == 1){
-				for(int i = 0; i<5;i++){
-					System.out.println(row_base[row_ind[i]]+" "+row_code[i]);
-				}
-			}
+			//encoding
 
-			//binary row_base, row_code; int row_ind
-			String[] temp_col = new String[3]; // r g b
-			if(row == 1){
-				for(int i = 0; i<5; i++){
-					temp_col[0] = row_base[row_ind[i]].substring(0, 4)+row_code[i].substring(0, 4);
-					temp_col[1] = row_base[row_ind[i]].substring(8, 12)+row_code[i].substring(8, 12);
-					temp_col[2] = row_base[row_ind[i]].substring(16, 20)+row_code[i].substring(16, 20);	
-					
-					System.out.println(temp_col[0]+temp_col[1]+temp_col[2]);
-				}
-			}
-			
+			String[] temp_col = new String[3]; // r g b			
 
 			for(int i = 0; i<w_c; i++){
 				temp_col[0] = row_base[row_ind[i]].substring(0, 4)+row_code[i].substring(0, 4);
@@ -186,17 +205,32 @@ public class MP {
 				temp_col[2] = row_base[row_ind[i]].substring(16, 20)+row_code[i].substring(16, 20);		
 				
 				int nrgb  = 65536 * Integer.parseInt(temp_col[0], 2) + 256 * Integer.parseInt(temp_col[1], 2) + Integer.parseInt(temp_col[2], 2) ;
-                base.setRGB( row_ind[i],row, nrgb);		
+                base.setRGB(row_ind[i], row, nrgb);		
 			}
-
-			//remember to make sure there are 24 bits when converting back to bin		
-
 			
 		}
 	}
 
-    /*public static void Decode(BufferedImage base, int w_c, int h_c){
-        BufferedImage dcd = new BufferedImage(w_c, h_c, BufferedImage.TYPE_INT_RGB);
+    public static void Decode(BufferedImage base, BufferedReader key_file){
+
+		String[] temp = new String[2];
+
+		try{
+			temp = key_file.readLine().split("[,]", 0);
+		}
+		catch(Exception e){
+			e.getStackTrace();
+		}
+
+		int w_b = base.getWidth();
+
+		int w_c = Integer.parseInt(temp[0]);
+		int h_c = Integer.parseInt(temp[1]);
+		
+		System.out.println(w_c + " " + h_c);
+
+
+        /*BufferedImage dcd = new BufferedImage(w_c, h_c, BufferedImage.TYPE_INT_RGB);
 
         int rgb_base;
 
@@ -225,8 +259,8 @@ public class MP {
 
             }
         }
-        WriteImage(dcd, "decoded.png");
-    }*/
+        WriteImage(dcd, "decoded.png");*/
+    }
 
 	public static void WriteImage(BufferedImage img, String path){
         File ImageFile = new File(path);
