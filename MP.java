@@ -36,7 +36,6 @@ public class MP {
 	}
 
 	public static void Encode(BufferedImage code, BufferedImage base, BufferedWriter key){
-		int ct = 0;
 		int w_b = base.getWidth();
         int h_b = base.getHeight();
         
@@ -105,8 +104,6 @@ public class MP {
 				}
 				row_code[col] = c_arr_bin_code[0] + c_arr_bin_code[1] + c_arr_bin_code[2];
 			}	
-
-			//row_base & row_code
 			
 			//creating 2d base array
 
@@ -153,19 +150,20 @@ public class MP {
 					row_ind[assigned_size] = base_copy[ind-1][1];
 					ind = ind - 1;
 				}
+
 				else if(ind == 0){
 					row_ind[assigned_size] = base_copy[ind][1];
-	
 				}
+				
 				else if(Math.abs(code_arr[assigned_size][0]-base_copy[ind][0])<Math.abs(code_arr[assigned_size][0]-base_copy[ind-1][0])){
 					row_ind[assigned_size] = base_copy[ind][1];
-	
 				}
+
 				else{
 					row_ind[assigned_size] = base_copy[ind-1][1];
 					ind = ind - 1;
-	
 				}
+
 				for(int i=0, k=0;i<base_copy.length;i++){
 					if(i!=ind){
 						base_copy2[k]=base_copy[i];
@@ -180,14 +178,11 @@ public class MP {
 				}
 				catch(Exception e){
 					e.getStackTrace();
-				}
-				
-				
+				}			
 				assigned_size++;
 			}
 			try{
 				key.write("\n");
-				ct++;
 			}
 			catch(Exception e){
 				e.getStackTrace();
@@ -229,37 +224,28 @@ public class MP {
 		
 		System.out.println(w_c + " " + h_c);
 
-
-        /*BufferedImage dcd = new BufferedImage(w_c, h_c, BufferedImage.TYPE_INT_RGB);
+        BufferedImage dcd = new BufferedImage(w_c, h_c, BufferedImage.TYPE_INT_RGB);
 
         int rgb_base;
 
         for(int row = 0; row<h_c; row++){
-            for(int col = 0; col<w_c; col++){
-
-                rgb_base = base.getRGB(col, row);
-                Color color_base = new Color(rgb_base, true);
-
-                int c_arr_base[] = {color_base.getRed(),color_base.getGreen(),color_base.getBlue()};
-				String c_arr_bin_base[]={"0","0","0"};
-
-                for(int l = 0; l<3; l++){
-
-					c_arr_bin_base[l] = Integer.toBinaryString(c_arr_base[l]);
-					
-					while(c_arr_bin_base[l].length()<8){
-						c_arr_bin_base[l] = "0" + c_arr_bin_base[l];
-					}
-
-                    c_arr_bin_base[l] = c_arr_bin_base[l].substring(4,8) + "1111" ;
+            
+			try{
+				temp = key_file.readLine().split("[,]", 0);
+			}
+			catch(Exception e){
+				e.getStackTrace();
+			}
+	
+			for(int col = 0; col<w_c; col++){
+				if(row == 1){
+					System.out.print(temp[col] + " ");
+				}
 				
-                }
-                int nrgb  = 65536 * Integer.parseInt(c_arr_bin_base[0], 2) + 256 * Integer.parseInt(c_arr_bin_base[1], 2) + Integer.parseInt(c_arr_bin_base[2], 2) ;
-                dcd.setRGB(col, row, nrgb);
-
+                
             }
         }
-        WriteImage(dcd, "decoded.png");*/
+        WriteImage(dcd, "decoded.png");
     }
 
 	public static void WriteImage(BufferedImage img, String path){
