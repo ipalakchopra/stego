@@ -7,22 +7,21 @@ import java.lang.Integer.*;
 import java.util.Arrays;
 import java.io.*;
 
-
 public class MP {
     public static void main(String[] args) throws IOException{
 		
 		File base_file = new File("base.png");			//reads the base image 
 		BufferedImage base =  ImageIO.read(base_file);
 
-		File code_file = new File("code.png");
+		File code_file = new File("kw.jpg");
 		BufferedImage code =  ImageIO.read(code_file);
 
 		//add in newjavaframe
 		FileWriter key_file = new FileWriter("key_file.txt");
-		BufferedWriter key = new BufferedWriter(key_file);
+		//FileWriter key = new FileWriter(key_file);
         
 		
-		Encode(code, base, key);
+		Encode(code, base, key_file);
 		WriteImage(base, "encoded.png");
 
         File base_file2 = new File("encoded.png");
@@ -31,11 +30,11 @@ public class MP {
 		BufferedReader key_dec2 = new BufferedReader(new FileReader("key_file.txt"));
 
         Decode(base2, key_dec2);
-        //WriteImage(base2, "op2.png");
+        WriteImage(base2, "op2.png");
         
 	}
 
-	public static void Encode(BufferedImage code, BufferedImage base, BufferedWriter key){
+	public static void Encode(BufferedImage code, BufferedImage base, FileWriter key){
 		int w_b = base.getWidth();
         int h_b = base.getHeight();
         
@@ -55,7 +54,7 @@ public class MP {
 		catch(Exception e){
 			e.getStackTrace();
 		}
-
+		String temp3="";
 		for(int row = 0; row<h_c; row++){
 			
 			//System.out.println("\nRow "+row);
@@ -85,7 +84,7 @@ public class MP {
 			}
 
 			//creating code binary array
-
+			
 			for(int col = 0; col<w_c; col++){
 
                 rgb_code = code.getRGB(col, row); 
@@ -173,20 +172,18 @@ public class MP {
 
 				String tempstr = Integer.toString(row_ind[assigned_size]);
 				
-				try{
-					key.write(tempstr+",");
-				}
-				catch(Exception e){
-					e.getStackTrace();
-				}			
+				
 				assigned_size++;
 			}
-			try{
-				key.write("\n");
-			}
-			catch(Exception e){
-				e.getStackTrace();
-			}
+			System.out.println(row+" "+row_ind.length);
+			
+
+			for(int i = 0; i<w_c;i++){
+				temp3 = temp3 + row_ind[i]+","; 
+			}temp3+="\n";
+			//System.out.println(temp3+"\n");
+
+			
 
 			Arrays.sort(base_arr, (a, b) -> Integer.compare(a[1], b[1]));
 
@@ -203,15 +200,24 @@ public class MP {
                 base.setRGB(row_ind[i], row, nrgb);		
 			}
 			
+		}System.out.println("\n"+temp3);
+		try{
+			key.write(temp3);
+			key.close();
+			//System.out.println(row);
 		}
+		catch(Exception e){
+			e.getStackTrace();
+		}
+
 	}
 
     public static void Decode(BufferedImage base, BufferedReader key_file){
 
-		String[] temp = new String[2];
+		String[] row_key = new String[2];
 
 		try{
-			temp = key_file.readLine().split("[,]", 0);
+			row_key = key_file.readLine().split("[,]", 0);
 		}
 		catch(Exception e){
 			e.getStackTrace();
@@ -219,10 +225,10 @@ public class MP {
 
 		int w_b = base.getWidth();
 
-		int w_c = Integer.parseInt(temp[0]);
-		int h_c = Integer.parseInt(temp[1]);
+		int w_c = Integer.parseInt(row_key[0]);
+		int h_c = Integer.parseInt(row_key[1]);
 		
-		System.out.println(w_c + " " + h_c);
+		System.out.println(w_c + " b " + h_c);
 
         BufferedImage dcd = new BufferedImage(w_c, h_c, BufferedImage.TYPE_INT_RGB);
 
@@ -231,18 +237,44 @@ public class MP {
         for(int row = 0; row<h_c; row++){
             
 			try{
-				temp = key_file.readLine().split("[,]", 0);
+				row_key = key_file.readLine().split("[,]", 0);
 			}
 			catch(Exception e){
 				e.getStackTrace();
 			}
-	
+
+			System.out.println(row);
+			System.out.println(row_key.length);
+			System.out.println(" ");
 			for(int col = 0; col<w_c; col++){
-				if(row == 1){
-					System.out.print(temp[col] + " ");
-				}
+
+				/*System.out.println(row);
+				System.out.println(col);
+				System.out.println(row_key[col]);
 				
-                
+				System.out.println(" ");*/
+				rgb_base = base.getRGB(Integer.parseInt(row_key[col]), row);
+				
+
+				Color color_base = new Color(rgb_base, true);
+
+				int c_arr_base[] = {color_base.getRed(),color_base.getGreen(),color_base.getBlue()};
+				String c_arr_bin_base[]={"0","0","0"};
+
+				for(int l = 0; l<3; l++){
+
+					c_arr_bin_base[l] = Integer.toBinaryString(c_arr_base[l]);
+					
+					while(c_arr_bin_base[l].length()<8){
+						c_arr_bin_base[l] = "0" + c_arr_bin_base[l];
+					}
+
+					c_arr_bin_base[l] = c_arr_bin_base[l].substring(4,8) + c_arr_bin_base[l].substring(0,4) ;
+
+				}
+
+				int nrgb  = 65536 * Integer.parseInt(c_arr_bin_base[0], 2) + 256 * Integer.parseInt(c_arr_bin_base[1], 2) + Integer.parseInt(c_arr_bin_base[2], 2) ;
+                dcd.setRGB( col,row, nrgb);		
             }
         }
         WriteImage(dcd, "decoded.png");
