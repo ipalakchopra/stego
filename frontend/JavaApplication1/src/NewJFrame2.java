@@ -8,6 +8,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JFileChooser;
 import javax.swing.ImageIcon;
+import java.io.IOException;
+import java.awt.Color;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -257,7 +259,7 @@ public class NewJFrame2 extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(NewJFrame2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -265,7 +267,83 @@ public class NewJFrame2 extends javax.swing.JFrame {
             }
         });
     }
+    public static void Decode(BufferedImage base, BufferedReader key_file){
 
+		String[] row_key = new String[2];
+
+		try{
+			row_key = key_file.readLine().split("[,]", 0);
+		}
+		catch(Exception e){
+			e.getStackTrace();
+		}
+
+		int w_b = base.getWidth();
+
+		int w_c = Integer.parseInt(row_key[0]);
+		int h_c = Integer.parseInt(row_key[1]);
+		
+		System.out.println(w_c + " b " + h_c);
+
+        BufferedImage dcd = new BufferedImage(w_c, h_c, BufferedImage.TYPE_INT_RGB);
+
+        int rgb_base;
+
+        for(int row = 0; row<h_c; row++){
+            
+			try{
+				row_key = key_file.readLine().split("[,]", 0);
+			}
+			catch(Exception e){
+				e.getStackTrace();
+			}
+
+			/*System.out.println(row);
+			System.out.println(row_key.length);
+			System.out.println(" ");*/
+			for(int col = 0; col<w_c; col++){
+
+				/*System.out.println(row);
+				System.out.println(col);
+				System.out.println(row_key[col]);
+				
+				System.out.println(" ");*/
+				rgb_base = base.getRGB(Integer.parseInt(row_key[col]), row);
+				
+
+				Color color_base = new Color(rgb_base, true);
+
+				int c_arr_base[] = {color_base.getRed(),color_base.getGreen(),color_base.getBlue()};
+				String c_arr_bin_base[]={"0","0","0"};
+
+				for(int l = 0; l<3; l++){
+
+					c_arr_bin_base[l] = Integer.toBinaryString(c_arr_base[l]);
+					
+					while(c_arr_bin_base[l].length()<8){
+						c_arr_bin_base[l] = "0" + c_arr_bin_base[l];
+					}
+
+					c_arr_bin_base[l] = c_arr_bin_base[l].substring(4,8) + c_arr_bin_base[l].substring(0,4) ;
+
+				}
+
+				int nrgb  = 65536 * Integer.parseInt(c_arr_bin_base[0], 2) + 256 * Integer.parseInt(c_arr_bin_base[1], 2) + Integer.parseInt(c_arr_bin_base[2], 2) ;
+                dcd.setRGB( col,row, nrgb);		
+            }
+        }
+        WriteImage(dcd, "decoded.png");
+    }
+    public static void WriteImage(BufferedImage img, String path){
+        File ImageFile = new File(path);
+
+        try{
+            ImageIO.write(img,"png", ImageFile);
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
