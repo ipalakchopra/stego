@@ -8,10 +8,27 @@ import javax.swing.JFileChooser;
 import javax.swing.ImageIcon;
 import java.io.IOException;
 import java.awt.Color;
+<<<<<<< HEAD
+=======
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+>>>>>>> b56fd256e2a9ad03f37ecac8290e6cbfcb64a11f
 
 public class NewJFrame2 extends javax.swing.JFrame {
+<<<<<<< HEAD
 
 
+=======
+    BufferedImage img_b = null;
+    BufferedReader key_file = null;
+    /**
+     * Creates new form NewJFrame2
+     */
+>>>>>>> b56fd256e2a9ad03f37ecac8290e6cbfcb64a11f
     public NewJFrame2() {
         initComponents();
     }
@@ -186,9 +203,9 @@ public class NewJFrame2 extends javax.swing.JFrame {
         chooser.showOpenDialog(null);
         File f=chooser.getSelectedFile();
         try{
-            BufferedImage img = null;
-            img = ImageIO.read(new File(f.getAbsolutePath()));
-            Image img1 = img.getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH);
+            //BufferedImage img = null;
+            img_b = ImageIO.read(new File(f.getAbsolutePath()));
+            Image img1 = img_b.getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH);
             ImageIcon format = new ImageIcon(img1);
             jLabel1.setIcon(format);
         }catch(Exception e){
@@ -217,6 +234,8 @@ public class NewJFrame2 extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // submit
+        Decode(img_b, key_file);
+        WriteImage(img_b, "encoded.png");
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
