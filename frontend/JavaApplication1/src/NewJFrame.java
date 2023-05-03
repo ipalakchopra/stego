@@ -212,7 +212,7 @@ public class NewJFrame extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
     
 
@@ -278,6 +278,11 @@ public class NewJFrame extends javax.swing.JFrame {
 
         Encode(img_c, img_b, key);
         WriteImage(img_b, "encoded.png");
+        
+        NewJFrame3 njf3= new NewJFrame3();
+        njf3.show();
+        
+        dispose();
         
         
         
