@@ -1,15 +1,7 @@
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.swing.ImageIcon;
 import java.awt.Image;
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-
-
 /**
  *
  * @author acer
@@ -20,12 +12,17 @@ public class NewJFrame3 extends javax.swing.JFrame {
      * Creates new form NewJFrame3""
      */
     public static BufferedImage img_b;
-    public NewJFrame3(BufferedImage img_b) {
-        img_b = img_b;
+    public NewJFrame3(BufferedImage img) {
+        img_b = img;
+        System.out.println(img_b.getHeight());
         initComponents();
-    }
-    
 
+        Image img1 = img_b.getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon format = new ImageIcon(img1);
+        jLabel1.setIcon(format);
+    }
+    //System.out.println(img_b.getWidth());
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -69,9 +66,9 @@ public class NewJFrame3 extends javax.swing.JFrame {
             .addGap(0, 284, Short.MAX_VALUE)
             .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                    .addGap(120, 120, 120)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
-                    .addGap(121, 121, 121)))
+                    .addContainerGap()
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
 
         jButton1.setBackground(new java.awt.Color(153, 153, 255));
@@ -130,9 +127,10 @@ public class NewJFrame3 extends javax.swing.JFrame {
         //ImageIcon img=new ImageIcon("E:/College/Sem_6/Assignments/stego/frontend/JavaApplication1/src/encoded.png");
         //jLabel1.setIcon(img);
 
-        Image img1 = img_b.getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH);
+        /*Image img1 = img_b.getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon format = new ImageIcon(img1);
-        jLabel1.setIcon(format);
+        jLabel1.setIcon(format);*/
+        System.out.println("hello");
         System.out.println(img_b.getHeight());
         System.out.println(img_b.getWidth());
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
