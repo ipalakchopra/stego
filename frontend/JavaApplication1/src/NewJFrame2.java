@@ -54,55 +54,69 @@ public class NewJFrame2 extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(153, 0, 0));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
         jTextField1.setEditable(false);
-        jTextField1.setBackground(new java.awt.Color(153, 0, 0));
+        jTextField1.setBackground(new java.awt.Color(204, 204, 255));
         jTextField1.setFont(new java.awt.Font("Roboto Black", 0, 48)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
         jTextField1.setText("DECODING");
         jTextField1.setBorder(null);
 
         jTextField2.setEditable(false);
-        jTextField2.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField2.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        jTextField2.setForeground(new java.awt.Color(51, 0, 0));
+        jTextField2.setBackground(new java.awt.Color(102, 102, 255));
+        jTextField2.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        jTextField2.setForeground(new java.awt.Color(255, 255, 255));
         jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField2.setText("Upload the Encoded Image");
-        jTextField2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 0, 0), 7, true));
+        jTextField2.setBorder(null);
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
 
+        jButton1.setBackground(new java.awt.Color(102, 102, 255));
         jButton1.setFont(new java.awt.Font("Roboto", 2, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("UPLOAD");
-        jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 0, 0), 7, true));
+        jButton1.setBorder(null);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jTextField3.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        jTextField3.setBackground(new java.awt.Color(102, 102, 255));
+        jTextField3.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        jTextField3.setForeground(new java.awt.Color(255, 255, 255));
         jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField3.setText("Upload the key file");
-        jTextField3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 0, 0), 7, true));
+        jTextField3.setBorder(null);
 
+        jButton3.setBackground(new java.awt.Color(102, 102, 255));
         jButton3.setFont(new java.awt.Font("Roboto", 2, 18)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("UPLOAD");
-        jButton3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 0, 0), 7, true));
+        jButton3.setBorder(null);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
 
-        jTextField4.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        jTextField4.setBackground(new java.awt.Color(102, 102, 255));
+        jTextField4.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        jTextField4.setForeground(new java.awt.Color(255, 255, 255));
         jTextField4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField4.setText("File Name");
-        jTextField4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 0, 0), 7, true));
+        jTextField4.setBorder(null);
         jTextField4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        jButton4.setBackground(new java.awt.Color(102, 102, 255));
         jButton4.setFont(new java.awt.Font("Roboto Medium", 0, 20)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(102, 0, 0));
+        jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("SUBMIT");
+        jButton4.setBorder(null);
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -115,7 +129,7 @@ public class NewJFrame2 extends javax.swing.JFrame {
         jDesktopPane2.setLayout(jDesktopPane2Layout);
         jDesktopPane2Layout.setHorizontalGroup(
             jDesktopPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jDesktopPane2Layout.setVerticalGroup(
             jDesktopPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,6 +246,10 @@ public class NewJFrame2 extends javax.swing.JFrame {
         Decode(img_b, key_file);
         WriteImage(img_b, "encoded.png");
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
 
     /**
      * @param args the command line arguments
