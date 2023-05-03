@@ -279,7 +279,7 @@ public class NewJFrame extends javax.swing.JFrame {
         Encode(img_c, img_b, key);
         WriteImage(img_b, "encoded.png");
         
-        NewJFrame3 njf3= new NewJFrame3();
+        NewJFrame3 njf3= new NewJFrame3(img_b);
         njf3.show();
         
         dispose();
