@@ -3,7 +3,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.awt.Color;
-import java.lang.Integer.*;
 import java.util.Arrays;
 import java.io.*;
 
@@ -13,7 +12,7 @@ public class MP {
 		File base_file = new File("catbig.jpg");			//reads the base image 
 		BufferedImage base =  ImageIO.read(base_file);
 
-		File code_file = new File("me.jpg");
+		File code_file = new File("kw.jpg");
 		BufferedImage code =  ImageIO.read(code_file);
 
 		//add in newjavaframe
@@ -43,9 +42,9 @@ public class MP {
 
         int rgb_base, rgb_code;
 
-        System.out.println(w_b + " " + h_b);
+        //System.out.println(w_b + " " + h_b);
 		
-		System.out.println(w_c + " " + h_c);
+		//System.out.println(w_c + " " + h_c);
 
 		try{
 			key.write(w_c + "," + h_c);
@@ -207,6 +206,7 @@ public class MP {
 		catch(Exception e){
 			e.getStackTrace();
 		}
+		System.out.println("Encoding successful!");
 
 	}
 
@@ -226,7 +226,7 @@ public class MP {
 		int w_c = Integer.parseInt(row_key[0]);
 		int h_c = Integer.parseInt(row_key[1]);
 		
-		System.out.println(w_c + " b " + h_c);
+		//System.out.println(w_c + " b " + h_c);
 
         BufferedImage dcd = new BufferedImage(w_c, h_c, BufferedImage.TYPE_INT_RGB);
 
@@ -241,16 +241,9 @@ public class MP {
 				e.getStackTrace();
 			}
 
-			/*System.out.println(row);
-			System.out.println(row_key.length);
-			System.out.println(" ");*/
+
 			for(int col = 0; col<w_c; col++){
 
-				/*System.out.println(row);
-				System.out.println(col);
-				System.out.println(row_key[col]);
-				
-				System.out.println(" ");*/
 				rgb_base = base.getRGB(Integer.parseInt(row_key[col]), row);
 				
 
@@ -276,6 +269,8 @@ public class MP {
             }
         }
         WriteImage(dcd, "decoded.png");
+		System.out.println("Decoding successful!");
+
     }
 
 	public static void WriteImage(BufferedImage img, String path){
