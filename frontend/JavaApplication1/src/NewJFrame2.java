@@ -3,6 +3,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java. sql.*;
 import java.io.File;
+import java.io.FileReader;
 import java.util.*;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
@@ -215,7 +216,8 @@ public class NewJFrame2 extends javax.swing.JFrame {
         chooser.showOpenDialog(null);
         File f=chooser.getSelectedFile();
         try{
-            File fl = new File(f.getAbsolutePath());
+            FileReader fl = new FileReader(f.getAbsolutePath());
+            key_file = new BufferedReader(fl);
   
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e,"Error",JOptionPane.ERROR_MESSAGE);
