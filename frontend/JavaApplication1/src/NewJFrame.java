@@ -274,10 +274,11 @@ public class NewJFrame extends javax.swing.JFrame {
             e.getStackTrace();
         }
         
-		
+		BufferedWriter key = new BufferedWriter(key_file);
 
-        Encode(img_c, img_b, key_file);
+        Encode(img_c, img_b, key);
         WriteImage(img_b, "encoded.png");
+        
         
         
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -317,7 +318,7 @@ public class NewJFrame extends javax.swing.JFrame {
         });
     }
     
-    public static void Encode(BufferedImage code, BufferedImage base, FileWriter key){
+    public static void Encode(BufferedImage code, BufferedImage base, BufferedWriter key){
 		int w_b = base.getWidth();
         int h_b = base.getHeight();
         
@@ -492,6 +493,8 @@ public class NewJFrame extends javax.swing.JFrame {
 		}
 
 	}
+    
+    
 
     public static void WriteImage(BufferedImage img, String path){
         File ImageFile = new File(path);
