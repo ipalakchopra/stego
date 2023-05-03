@@ -10,10 +10,14 @@ import java.io.*;
 public class MP {
     public static void main(String[] args) throws IOException{
 		
-		File base_file = new File("base.png");			//reads the base image 
+		File base_file = new File("catbig.jpg");			//reads the base image 
 		BufferedImage base =  ImageIO.read(base_file);
 
+<<<<<<< HEAD
 		File code_file = new File("code.png");
+=======
+		File code_file = new File("me.jpg");
+>>>>>>> cbf0da30192d312a0eede8e385f6f2c7904b1b60
 		BufferedImage code =  ImageIO.read(code_file);
 
 		//add in newjavaframe
@@ -171,18 +175,19 @@ public class MP {
 				}base_copy=base_copy2;
 
 				String tempstr = Integer.toString(row_ind[assigned_size]);
-				
-				
+						
 				assigned_size++;
 			}
+<<<<<<< HEAD
+=======
+			//System.out.println(row+" "+row_ind.length);
+>>>>>>> cbf0da30192d312a0eede8e385f6f2c7904b1b60
 			
 
 			for(int i = 0; i<w_c;i++){
 				temp3 = temp3 + row_ind[i]+","; 
 			}temp3+="\n";
 			//System.out.println(temp3+"\n");
-
-			
 
 			Arrays.sort(base_arr, (a, b) -> Integer.compare(a[1], b[1]));
 
@@ -200,6 +205,10 @@ public class MP {
 			}
 			
 		}
+<<<<<<< HEAD
+=======
+		//System.out.println("\n"+temp3);
+>>>>>>> cbf0da30192d312a0eede8e385f6f2c7904b1b60
 		try{
 			key.write(temp3);
 			key.close();
@@ -242,9 +251,9 @@ public class MP {
 				e.getStackTrace();
 			}
 
-			System.out.println(row);
+			/*System.out.println(row);
 			System.out.println(row_key.length);
-			System.out.println(" ");
+			System.out.println(" ");*/
 			for(int col = 0; col<w_c; col++){
 
 				/*System.out.println(row);
