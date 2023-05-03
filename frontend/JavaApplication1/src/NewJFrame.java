@@ -274,9 +274,9 @@ public class NewJFrame extends javax.swing.JFrame {
             e.getStackTrace();
         }
         
-		BufferedWriter key = new BufferedWriter(key_file);
+		
 
-        Encode(img_c, img_b, key);
+        Encode(img_c, img_b, key_file);
         WriteImage(img_b, "encoded.png");
         
         
@@ -317,7 +317,7 @@ public class NewJFrame extends javax.swing.JFrame {
         });
     }
     
-    public static void Encode(BufferedImage code, BufferedImage base, BufferedWriter key){
+    public static void Encode(BufferedImage code, BufferedImage base, FileWriter key){
 		int w_b = base.getWidth();
         int h_b = base.getHeight();
         
@@ -337,7 +337,7 @@ public class NewJFrame extends javax.swing.JFrame {
 		catch(Exception e){
 			e.getStackTrace();
 		}
-
+		String temp3="";
 		for(int row = 0; row<h_c; row++){
 			
 			//System.out.println("\nRow "+row);
@@ -367,7 +367,7 @@ public class NewJFrame extends javax.swing.JFrame {
 			}
 
 			//creating code binary array
-
+			
 			for(int col = 0; col<w_c; col++){
 
                 rgb_code = code.getRGB(col, row); 
@@ -454,21 +454,16 @@ public class NewJFrame extends javax.swing.JFrame {
 				}base_copy=base_copy2;
 
 				String tempstr = Integer.toString(row_ind[assigned_size]);
-				
-				try{
-					key.write(tempstr+",");
-				}
-				catch(Exception e){
-					e.getStackTrace();
-				}			
+						
 				assigned_size++;
 			}
-			try{
-				key.write("\n");
-			}
-			catch(Exception e){
-				e.getStackTrace();
-			}
+			//System.out.println(row+" "+row_ind.length);
+			
+
+			for(int i = 0; i<w_c;i++){
+				temp3 = temp3 + row_ind[i]+","; 
+			}temp3+="\n";
+			//System.out.println(temp3+"\n");
 
 			Arrays.sort(base_arr, (a, b) -> Integer.compare(a[1], b[1]));
 
@@ -486,6 +481,16 @@ public class NewJFrame extends javax.swing.JFrame {
 			}
 			
 		}
+		//System.out.println("\n"+temp3);
+		try{
+			key.write(temp3);
+			key.close();
+			//System.out.println(row);
+		}
+		catch(Exception e){
+			e.getStackTrace();
+		}
+
 	}
 
     public static void WriteImage(BufferedImage img, String path){
