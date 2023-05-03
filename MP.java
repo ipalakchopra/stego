@@ -13,7 +13,7 @@ public class MP {
 		File base_file = new File("base.png");			//reads the base image 
 		BufferedImage base =  ImageIO.read(base_file);
 
-		File code_file = new File("kw.jpg");
+		File code_file = new File("code.png");
 		BufferedImage code =  ImageIO.read(code_file);
 
 		//add in newjavaframe
@@ -175,7 +175,6 @@ public class MP {
 				
 				assigned_size++;
 			}
-			System.out.println(row+" "+row_ind.length);
 			
 
 			for(int i = 0; i<w_c;i++){
@@ -200,7 +199,7 @@ public class MP {
                 base.setRGB(row_ind[i], row, nrgb);		
 			}
 			
-		}System.out.println("\n"+temp3);
+		}
 		try{
 			key.write(temp3);
 			key.close();
