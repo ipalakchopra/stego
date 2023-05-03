@@ -1,6 +1,8 @@
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.swing.ImageIcon;
+import java.awt.Image;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -17,7 +19,9 @@ public class NewJFrame3 extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame3""
      */
-    public NewJFrame3() {
+    public static BufferedImage img_b;
+    public NewJFrame3(BufferedImage img_b) {
+        img_b = img_b;
         initComponents();
     }
     
@@ -119,8 +123,14 @@ public class NewJFrame3 extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        ImageIcon img=new ImageIcon("encoded.png");
-        jLabel1.setIcon(img);
+        //ImageIcon img=new ImageIcon("E:/College/Sem_6/Assignments/stego/frontend/JavaApplication1/src/encoded.png");
+        //jLabel1.setIcon(img);
+
+        Image img1 = img_b.getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon format = new ImageIcon(img1);
+        jLabel1.setIcon(format);
+        System.out.println(img_b.getHeight());
+        System.out.println(img_b.getWidth());
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -146,7 +156,7 @@ public class NewJFrame3 extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewJFrame3().setVisible(true);
+                new NewJFrame3(img_b).setVisible(true);
             }
         });
     }
