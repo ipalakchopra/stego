@@ -245,6 +245,11 @@ public class NewJFrame2 extends javax.swing.JFrame {
         // submit
         Decode(img_b, key_file);
         WriteImage(img_b, "encoded.png");
+        
+        NewJFrame4 njf4= new NewJFrame4();
+        njf4.show();
+        
+        dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
