@@ -13,11 +13,7 @@ public class MP {
 		File base_file = new File("catbig.jpg");			//reads the base image 
 		BufferedImage base =  ImageIO.read(base_file);
 
-<<<<<<< HEAD
-		File code_file = new File("code.png");
-=======
 		File code_file = new File("me.jpg");
->>>>>>> cbf0da30192d312a0eede8e385f6f2c7904b1b60
 		BufferedImage code =  ImageIO.read(code_file);
 
 		//add in newjavaframe
@@ -178,10 +174,7 @@ public class MP {
 						
 				assigned_size++;
 			}
-<<<<<<< HEAD
-=======
 			//System.out.println(row+" "+row_ind.length);
->>>>>>> cbf0da30192d312a0eede8e385f6f2c7904b1b60
 			
 
 			for(int i = 0; i<w_c;i++){
@@ -205,10 +198,7 @@ public class MP {
 			}
 			
 		}
-<<<<<<< HEAD
-=======
 		//System.out.println("\n"+temp3);
->>>>>>> cbf0da30192d312a0eede8e385f6f2c7904b1b60
 		try{
 			key.write(temp3);
 			key.close();
