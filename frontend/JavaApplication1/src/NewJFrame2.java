@@ -32,6 +32,7 @@ public class NewJFrame2 extends javax.swing.JFrame {
     }
     BufferedImage img_b = null;
     BufferedReader key_file = null;
+    BufferedImage dcd = null;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -243,10 +244,10 @@ public class NewJFrame2 extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // submit
-        Decode(img_b, key_file);
-        WriteImage(img_b, "encoded.png");
-        
-        NewJFrame4 njf4= new NewJFrame4();
+        Decode(img_b, key_file, dcd);
+        WriteImage(img_b, "decoded.png");
+        //System.out.println(dcd.getWidth());
+        NewJFrame4 njf4= new NewJFrame4(img_b);
         njf4.show();
         
         dispose();
@@ -286,7 +287,7 @@ public class NewJFrame2 extends javax.swing.JFrame {
             }
         });
     }
-    public static void Decode(BufferedImage base, BufferedReader key_file){
+    public static void Decode(BufferedImage base, BufferedReader key_file, BufferedImage dcd){
 
 		String[] row_key = new String[2];
 
@@ -304,7 +305,7 @@ public class NewJFrame2 extends javax.swing.JFrame {
 		
 		System.out.println(w_c + " b " + h_c);
 
-        BufferedImage dcd = new BufferedImage(w_c, h_c, BufferedImage.TYPE_INT_RGB);
+        dcd = new BufferedImage(w_c, h_c, BufferedImage.TYPE_INT_RGB);
 
         int rgb_base;
 
@@ -343,7 +344,8 @@ public class NewJFrame2 extends javax.swing.JFrame {
                 dcd.setRGB( col,row, nrgb);		
             }
         }
-        WriteImage(dcd, "decoded.png");
+        base=dcd;
+        //WriteImage(dcd, "decoded.png");
     }
     public static void WriteImage(BufferedImage img, String path){
         File ImageFile = new File(path);
