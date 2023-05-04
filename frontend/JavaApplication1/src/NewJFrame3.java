@@ -17,7 +17,7 @@ public class NewJFrame3 extends javax.swing.JFrame {
         System.out.println(img_b.getHeight());
         initComponents();
 
-        Image img1 = img_b.getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH);
+        Image img1 = img_b.getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight()*img_b.getHeight()/img_b.getWidth(), Image.SCALE_SMOOTH);
         ImageIcon format = new ImageIcon(img1);
         jLabel1.setIcon(format);
     }
