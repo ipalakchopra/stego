@@ -14,7 +14,7 @@ public class NewJFrame3 extends javax.swing.JFrame {
     public static BufferedImage img_b;
     public NewJFrame3(BufferedImage img) {
         img_b = img;
-        System.out.println(img_b.getHeight());
+        //System.out.println(img_b.getHeight());
         initComponents();
 
         Image img1 = img_b.getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight()*img_b.getHeight()/img_b.getWidth(), Image.SCALE_SMOOTH);
