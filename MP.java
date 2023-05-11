@@ -9,10 +9,10 @@ import java.io.*;
 public class MP {
     public static void main(String[] args) throws IOException{
 		
-		File base_file = new File("catbig.jpg");			//reads the base image 
+		File base_file = new File("base_democ.jpg");			//reads the base image 
 		BufferedImage base =  ImageIO.read(base_file);
 
-		File code_file = new File("kw.jpg");
+		File code_file = new File("code_demo.jpeg");
 		BufferedImage code =  ImageIO.read(code_file);
 
 		//add in newjavaframe
